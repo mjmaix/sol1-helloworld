@@ -1,11 +1,15 @@
 {
-  "scripts": {
-  },
-  "dependencies": {
-    "@truffle/hdwallet-provider": "^2.0.3"
-  },
-  "devDependencies": {
-    "prettier": "^2.5.1",
-    "prettier-plugin-solidity": "^1.0.0-beta.19"
-  }
+    "scripts": {
+        "deploy:bsctestnet": "(date && rm -rf build && truffle compile && truffle migrate --network bsctestnet) 2>&1 | tee -a deploy.log",
+        "verify": "truffle run verify",
+        "verify:example": "truffle run verify HelloWorld@0x1d17.... HelloWorldPermanent@0x3973... --network bsctestnet  2>&1 | tee -a deploy.log"
+    },
+    "dependencies": {
+        "@truffle/hdwallet-provider": "^2.0.3"
+    },
+    "devDependencies": {
+        "prettier": "^2.5.1",
+        "prettier-plugin-solidity": "^1.0.0-beta.19",
+        "truffle-plugin-verify": "^0.5.21"
+    }
 }

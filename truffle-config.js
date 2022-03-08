@@ -23,6 +23,7 @@ const HDWalletProvider = require('@truffle/hdwallet-provider')
 // const fs = require('fs');
 const mnemonic = require('./secrets.json').mnemonic
 const networks = require('./secrets.json').networks
+const apiKeys = require('./secrets.json').apiKeys
 
 module.exports = {
     /**
@@ -43,9 +44,9 @@ module.exports = {
         // options below to some value.
         //
         development: {
-            host: '127.0.0.1', // Localhost (default: none)
-            port: 8545, // Standard Ethereum port (default: none)
-            network_id: '5777', // Any network (default: none)
+            host: networks.development.host, // Localhost (default: none)
+            port: networks.development.port, // Standard Ethereum port (default: none)
+            network_id: networks.development.network_id, // Any network (default: none)
         },
         // Another network with more advanced options...
         // advanced: {
@@ -66,6 +67,15 @@ module.exports = {
             confirmations: 2, // # of confs to wait between deployments. (default: 0)
             timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
             skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+        },
+        bsctestnet: {
+            provider: () =>
+                new HDWalletProvider(mnemonic, networks.bsctestnet.url),
+            network_id: 97,
+            confirmations: 10,
+            timeoutBlocks: 200,
+            skipDryRun: true,
+            production: true, // Treats this network as if it was a public net. (default: false)
         },
         // Useful for private networks
         // private: {
@@ -93,6 +103,11 @@ module.exports = {
             //  evmVersion: "byzantium"
             // }
         },
+    },
+
+    plugins: ['truffle-plugin-verify'],
+    api_keys: {
+        bscscan: apiKeys.BSCCANAPIKEY,
     },
 
     // Truffle DB is currently disabled by default; to enable it, change enabled:
